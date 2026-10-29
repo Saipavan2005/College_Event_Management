@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_form_helpers.html" import render_field %}
+{% block title %}{{ mode }} Event{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h4 class="mb-3">{{ mode }} Event</h4>
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+                    {{ render_field(form.title) }}
+                    {{ render_field(form.description) }}
+                    <div class="row">
+                        <div class="col-md-6">{{ render_field(form.category) }}</div>
+                        <div class="col-md-6">{{ render_field(form.venue) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">{{ render_field(form.event_date) }}</div>
+                        <div class="col-md-6">{{ render_field(form.event_time) }}</div>
+                    </div>
+                    {{ render_field(form.max_participants) }}
+                    {{ render_field(form.poster) }}
+                    {% if event and event.poster_filename %}
+                        <img src="{{ url_for('poster_file', filename=event.poster_filename) }}" class="img-thumbnail mb-3" style="max-height:150px;">
+                    {% endif %}
+                    {{ form.submit(class="btn btn-primary w-100") }}
+                </form>
+                <p class="text-muted small mt-3 mb-0">
+                    Note: {{ 'Submitting' if mode == 'Create' else 'Saving changes' }} sends this event to the admin for approval before it appears publicly.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

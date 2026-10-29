@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-2-4 col-6 col-md">
+        <div class="card stat-card p-3 text-center"><h4>{{ stats.total_students }}</h4><p class="text-muted mb-0 small">Students</p></div>
+    </div>
+    <div class="col-6 col-md">
+        <div class="card stat-card p-3 text-center"><h4>{{ stats.total_organizers }}</h4><p class="text-muted mb-0 small">Organizers</p></div>
+    </div>
+    <div class="col-6 col-md">
+        <div class="card stat-card p-3 text-center"><h4>{{ stats.total_events }}</h4><p class="text-muted mb-0 small">Total Events</p></div>
+    </div>
+    <div class="col-6 col-md">
+        <div class="card stat-card p-3 text-center"><h4 class="text-warning">{{ stats.pending_events }}</h4><p class="text-muted mb-0 small">Pending</p></div>
+    </div>
+    <div class="col-6 col-md">
+        <div class="card stat-card p-3 text-center"><h4>{{ stats.total_registrations }}</h4><p class="text-muted mb-0 small">Registrations</p></div>
+    </div>
+</div>
+
+<h4 class="mb-3">Events Awaiting Approval</h4>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm rounded">
+    <thead><tr><th>Title</th><th>Organizer</th><th>Date</th><th>Category</th><th></th></tr></thead>
+    <tbody>
+        {% for event in pending_events %}
+        <tr>
+            <td>{{ event.title }}</td>
+            <td>{{ event.organizer.full_name }}</td>
+            <td>{{ event.event_date.strftime('%b %d, %Y') }}</td>
+            <td>{{ event.category }}</td>
+            <td class="text-end">
+                <form class="d-inline" method="POST" action="{{ url_for('admin.approve_event', event_id=event.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm btn-success">Approve</button>
+                </form>
+                <form class="d-inline" method="POST" action="{{ url_for('admin.reject_event', event_id=event.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm btn-outline-danger">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-4">No events waiting for approval. 🎉</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

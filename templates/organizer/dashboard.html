@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Organizer Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Events</h2>
+    <a href="{{ url_for('organizer.create_event') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> New Event</a>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card p-3 text-center">
+            <h4>{{ counts.total }}</h4><p class="text-muted mb-0 small">Total</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 text-center">
+            <h4 class="text-warning">{{ counts.pending }}</h4><p class="text-muted mb-0 small">Pending Approval</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 text-center">
+            <h4 class="text-success">{{ counts.approved }}</h4><p class="text-muted mb-0 small">Approved</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card p-3 text-center">
+            <h4 class="text-danger">{{ counts.rejected }}</h4><p class="text-muted mb-0 small">Rejected</p>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm rounded">
+    <thead>
+        <tr><th>Title</th><th>Date</th><th>Status</th><th>Registrations</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.title }}</td>
+            <td>{{ event.event_date.strftime('%b %d, %Y') }}</td>
+            <td><span class="badge badge-status-{{ event.status }}">{{ event.status|capitalize }}</span></td>
+            <td>{{ event.seats_taken }}{% if event.max_participants %} / {{ event.max_participants }}{% endif %}</td>
+            <td class="text-end">
+                <a href="{{ url_for('organizer.participants', event_id=event.id) }}" class="btn btn-sm btn-outline-secondary">Participants</a>
+                <a href="{{ url_for('organizer.edit_event', event_id=event.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form class="d-inline" method="POST" action="{{ url_for('organizer.delete_event', event_id=event.id) }}" data-confirm="Delete this event permanently?">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-4">You haven't created any events yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

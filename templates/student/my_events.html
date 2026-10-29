@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}My Events{% endblock %}
+{% block content %}
+<h2 class="mb-4">My Registrations</h2>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm rounded">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Attended</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reg in registrations %}
+        <tr>
+            <td><a href="{{ url_for('student.event_detail', event_id=reg.event.id) }}">{{ reg.event.title }}</a></td>
+            <td>{{ reg.event.event_date.strftime('%b %d, %Y') }}</td>
+            <td>
+                {% if reg.event.is_past %}<span class="badge bg-secondary">Past</span>
+                {% else %}<span class="badge bg-success">Upcoming</span>{% endif %}
+            </td>
+            <td>
+                {% if reg.attended %}<i class="bi bi-check-circle-fill text-success"></i>{% else %}<i class="bi bi-dash-circle text-muted"></i>{% endif %}
+            </td>
+            <td>
+                {% if reg.event.is_past %}
+                    <a href="{{ url_for('student.leave_feedback', event_id=reg.event.id) }}" class="btn btn-sm btn-outline-primary">Feedback</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-4">You haven't registered for any events yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

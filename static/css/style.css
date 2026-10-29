@@ -1,0 +1,37 @@
+body {
+    background-color: #f7f8fa;
+}
+
+.card-event {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.card-event:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.card-event .card-img-top {
+    height: 160px;
+    object-fit: cover;
+    background: linear-gradient(135deg, #1a2b4c, #3b5998);
+}
+
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.hero {
+    background: linear-gradient(135deg, #1a2b4c, #2f4b7c);
+    color: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+}
+
+.badge-status-pending { background-color: #ffc107; color: #212529; }
+.badge-status-approved { background-color: #198754; }
+.badge-status-rejected { background-color: #dc3545; }

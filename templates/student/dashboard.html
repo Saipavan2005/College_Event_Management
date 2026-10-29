@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">Welcome back, {{ current_user.full_name.split(' ')[0] }} 👋</h2>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center">
+            <i class="bi bi-calendar-check fs-1 text-primary"></i>
+            <h3 class="mt-2">{{ upcoming_count }}</h3>
+            <p class="text-muted mb-0">Upcoming Registrations</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center">
+            <i class="bi bi-journal-text fs-1 text-success"></i>
+            <h3 class="mt-2">{{ total_registrations }}</h3>
+            <p class="text-muted mb-0">Total Events Joined</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card p-4 text-center">
+            <i class="bi bi-award fs-1 text-warning"></i>
+            <h3 class="mt-2">{{ certificates_earned }}</h3>
+            <p class="text-muted mb-0">Certificates Earned</p>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex gap-2">
+    <a href="{{ url_for('student.browse_events') }}" class="btn btn-primary"><i class="bi bi-search"></i> Browse Events</a>
+    <a href="{{ url_for('student.my_events') }}" class="btn btn-outline-primary"><i class="bi bi-list-check"></i> My Registrations</a>
+    <a href="{{ url_for('student.certificates') }}" class="btn btn-outline-primary"><i class="bi bi-award"></i> My Certificates</a>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Reports & Analytics{% endblock %}
+{% block content %}
+<h2 class="mb-4">Reports &amp; Analytics</h2>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-3 h-100">
+            <h5>Events by Category</h5>
+            <table class="table table-sm mb-0">
+                {% for category, count in events_by_category %}
+                <tr><td>{{ category }}</td><td class="text-end">{{ count }}</td></tr>
+                {% else %}
+                <tr><td class="text-muted">No data yet.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm p-3 h-100">
+            <h5>Most Popular Events</h5>
+            <table class="table table-sm mb-0">
+                {% for title, count in popular_events %}
+                <tr><td>{{ title }}</td><td class="text-end">{{ count }} registrations</td></tr>
+                {% else %}
+                <tr><td class="text-muted">No registrations yet.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm p-3 h-100">
+            <h5>Top Organizers</h5>
+            <table class="table table-sm mb-0">
+                {% for name, count in top_organizers %}
+                <tr><td>{{ name }}</td><td class="text-end">{{ count }} approved events</td></tr>
+                {% else %}
+                <tr><td class="text-muted">No approved events yet.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm p-3 h-100">
+            <h5>Monthly Participation</h5>
+            <table class="table table-sm mb-0">
+                {% for month, count in monthly %}
+                <tr><td>{{ month }}</td><td class="text-end">{{ count }} registrations</td></tr>
+                {% else %}
+                <tr><td class="text-muted">No data yet.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card shadow-sm p-3">
+            <h5>Average Feedback Rating</h5>
+            <p class="display-6 mb-0">{{ avg_rating if avg_rating else 'No feedback yet' }} {% if avg_rating %}/ 5{% endif %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

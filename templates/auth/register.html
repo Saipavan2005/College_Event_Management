@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_form_helpers.html" import render_field %}
+{% block title %}Sign Up · CampusEvents{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="mb-4 text-center">Create Account</h3>
+                <form method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+                    {{ render_field(form.full_name) }}
+                    {{ render_field(form.email) }}
+                    {{ render_field(form.role) }}
+                    <div class="row">
+                        <div class="col-md-6">{{ render_field(form.department) }}</div>
+                        <div class="col-md-6">{{ render_field(form.roll_number) }}</div>
+                    </div>
+                    {{ render_field(form.club_name) }}
+                    <div class="row">
+                        <div class="col-md-6">{{ render_field(form.password) }}</div>
+                        <div class="col-md-6">{{ render_field(form.confirm_password) }}</div>
+                    </div>
+                    {{ form.submit(class="btn btn-primary w-100") }}
+                </form>
+                <p class="text-center mt-3 mb-0">
+                    Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
+                </p>
+                <p class="text-center text-muted small mt-2">
+                    Note: department / roll number are for students; club name is for organizers.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

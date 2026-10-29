@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+<h2 class="mb-4">Manage Users</h2>
+
+<h5>Students</h5>
+<div class="table-responsive mb-4">
+<table class="table table-hover bg-white shadow-sm rounded">
+    <thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Roll No.</th><th></th></tr></thead>
+    <tbody>
+        {% for u in students %}
+        <tr>
+            <td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.department or '-' }}</td><td>{{ u.roll_number or '-' }}</td>
+            <td class="text-end">
+                <form method="POST" action="{{ url_for('admin.delete_user', user_id=u.id) }}" data-confirm="Remove {{ u.full_name }}'s account? This cannot be undone.">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm btn-outline-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-3">No students yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h5>Organizers</h5>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm rounded">
+    <thead><tr><th>Name</th><th>Email</th><th>Club / Society</th><th></th></tr></thead>
+    <tbody>
+        {% for u in organizers %}
+        <tr>
+            <td>{{ u.full_name }}</td><td>{{ u.email }}</td><td>{{ u.club_name or '-' }}</td>
+            <td class="text-end">
+                <form method="POST" action="{{ url_for('admin.delete_user', user_id=u.id) }}" data-confirm="Remove {{ u.full_name }}'s account? This cannot be undone.">
+                    <button class="btn btn-sm btn-outline-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center text-muted py-3">No organizers yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
