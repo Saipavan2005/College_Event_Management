@@ -11,3 +11,5 @@ Flask-Cors==4.0.1
 
 # Only needed if you switch DATABASE_URL to MySQL:
 # PyMySQL==1.1.1
+
+gunicorn==22.0.0
